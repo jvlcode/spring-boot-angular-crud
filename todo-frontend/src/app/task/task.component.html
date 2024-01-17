@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>Spring Boot + Angular CRUD</h1>
+    <form (ngSubmit)="createTask()">
+        <div class="row mt-5">
+            <div class="col-6">
+                <input type="text" class="form-control" [(ngModel)]="newTask.description" name="newTaskDescription" >
+            </div>
+            <div class="col-2">
+                <button class="btn btn-success" type="submit">Add Task</button>
+            </div>
+        </div>
+    </form>
+    <div class="row mt-5">
+            <div class="col-6">
+                <div *ngIf="!(tasks.length>0);else taskList">
+                    <h3>No Data</h3>
+                </div>
+                <ng-template #taskList>
+                    <ul class="list-group" *ngFor="let task of tasks;">
+                        <li class="list-group-item bg-secondary text-light">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>{{task.description}}</p>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-light mx-2" (click)="editTask(task)">Edit</button>
+                                    <button type="button" class="btn btn-light" (click)="deleteTask(task.id)">Delete</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </ng-template>
+            </div>
+            <div class="col-6">
+                <div *ngIf="editingTask">
+                    <form (ngSubmit)="updateTask()">
+                        <label for="editTaskDescription">Edit Task:</label>
+                        <div class="form-group">
+                            <input 
+                                type="text" 
+                                [(ngModel)]="updatedTask.description"
+                                name="updateTaskDescription"
+                                class="form-control"
+                                id="editTaskDescription"
+                            >
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-success mx-2">Save</button>
+                            <button class="btn btn-danger" (click)="cancelEdit()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
